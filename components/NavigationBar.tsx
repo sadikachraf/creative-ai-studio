@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase-browser';
 
 export default function NavigationBar() {
     const pathname = usePathname();
+    const router = useRouter();
 
     const links = [
         {
@@ -27,6 +29,13 @@ export default function NavigationBar() {
         },
     ];
 
+    const handleSignOut = async () => {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+        router.push('/login');
+        router.refresh();
+    };
+
     return (
         <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 h-14">
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-full">
@@ -42,7 +51,7 @@ export default function NavigationBar() {
                     </Link>
 
                     {/* Nav Links */}
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 flex-1">
                         {links.map((link) => {
                             const isActive = pathname === link.path || pathname.startsWith(link.path + '/');
                             return (
@@ -61,6 +70,18 @@ export default function NavigationBar() {
                             );
                         })}
                     </div>
+
+                    {/* Sign Out */}
+                    <button
+                        onClick={handleSignOut}
+                        title="Sign out"
+                        className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-red-500 hover:bg-red-50 px-2.5 py-1.5 rounded-md transition-colors"
+                    >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Sign out
+                    </button>
                 </div>
             </div>
         </nav>
