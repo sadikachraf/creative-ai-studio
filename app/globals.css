@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f8fa;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --border: #e8edf3;
+  --border-light: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --indigo: #4f46e5;
+  --indigo-light: #eef2ff;
+  --indigo-hover: #4338ca;
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 10px 24px -4px rgb(0 0 0 / 0.08), 0 4px 8px -2px rgb(0 0 0 / 0.05);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* Minimal scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #dde3ec; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #c8d0db; }
+
+/* Refined focus ring */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* Global transition */
+button, a { transition: all 0.15s ease; }
+
+/* Card base — reusable "glass" surface */
+.card {
+  background: #fff;
+  border: 1px solid #e8edf3;
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
 }
